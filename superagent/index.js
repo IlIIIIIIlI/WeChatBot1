@@ -242,6 +242,7 @@ async function getFinanceNews(words) {
                 url, method: 'GET', params: {
                     key: config.TXAPIKEY,
                     num: 20,
+                    rand: 0,
                 }
             });
             if (content.code === 200) {
@@ -562,7 +563,23 @@ async function getGuoDu() {
         let content = await superagent.req({ url, method: 'GET', params: { key: config.TXAPIKEY } });
         if (content.code === 200) {
             console.log(content.newslist);
-            let str = content.newslist[0].saying + '\n' + content.newslist[0].transl + '\n' + content.newslist[0].source + '\n' + "请重试！";
+            let str = content.newslist[0].saying + '\n' + content.newslist[0].transl + '---' + content.newslist[0].source + '\n';
+            console.log(str);
+            return str;
+        }
+    } catch (err) {
+        console.log('我迷了', err);
+    }
+}
+
+async function getEveryDay() {
+    // 获取神回复
+    let url = TXHOST + 'everyday/';
+    try {
+        let content = await superagent.req({ url, method: 'GET', params: { key: config.TXAPIKEY } });
+        if (content.code === 200) {
+            console.log(content.newslist);
+            let str = content.newslist[0].content + '\n' + content.newslist[0].note + '\n' + content.newslist[0].source;
             console.log(str);
             return str;
         }
@@ -584,6 +601,59 @@ async function getLovePoem() {
         }
     } catch (err) {
         console.log('我迷了', err);
+    }
+}
+
+
+async function getMingYan(words) {
+    // 获取天行天气
+    let url = TXHOST + 'flmj/';
+    try {
+        let content = await superagent.req({
+            url, method: 'GET', params: {
+                key: config.TXAPIKEY,
+                type: words,
+                num: 10,
+            }
+        });
+        if (content.code === 200) {
+            let obj = '好的主人，咱们来看看关于' + words + '的诗词' + '\n';
+            for (const AIInfo in content.newslist) {
+                obj += content.newslist[AIInfo].content;
+                obj += '\n';
+                obj += content.newslist[AIInfo].source;
+                obj += '\n';
+                obj += '\n';
+            }
+            return obj;
+        }
+    } catch (err) {
+        console.log('请求诗词失败', err);
+    }
+}
+
+async function getCangTou(words) {
+    // 获取天行天气
+    let url = TXHOST + 'cangtoushi/';
+    try {
+        let content = await superagent.req({
+            url, method: 'GET', params: {
+                key: config.TXAPIKEY,
+                word: words,
+                type: 4,
+                // len：1, 七言诗
+            }
+        });
+        if (content.code === 200) {
+            let obj = '好的主人，咱们来看看关于' + words + '的诗词' + '\n';
+            for (const AIInfo in content.newslist) {
+                obj += content.newslist[AIInfo].list;
+                obj += '\n';
+            }
+            return obj;
+        }
+    } catch (err) {
+        console.log('请求诗词失败', err);
     }
 }
 
@@ -654,5 +724,8 @@ module.exports = {
     getGuoDu,
     getLovePoem,
     getFinanceNews,
-    getWorldNews
+    getWorldNews,
+    getEveryDay,
+    getMingYan,
+    getCangTou
 };

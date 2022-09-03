@@ -1,5 +1,12 @@
-## 微信每日说
+# WeChatBot
 
+20220903 updates:
+1. 新增了天行数据上全网热搜，世界时间，IP查询，网页图片，股票术语，AI新闻，获取摘要，二维码，汇率换算，励志名言，古代情诗，财经新闻，国际新闻，分类诗词和藏头诗词等接口功能
+2. 新增了定时发送功能，以及多用户多任务定时发送功能。
+
+
+# 以下是原代码
+## 微信每日说
 [![node version](https://img.shields.io/badge/node-%3E%3D16-blue.svg)](http://nodejs.cn/download/)
 [![node version](https://img.shields.io/badge/wechaty-%3E%3D1.20.2-blue.svg)](https://github.com/Chatie/wechaty)
 ![](https://img.shields.io/badge/Window-green.svg)
@@ -365,7 +372,10 @@ npm install
 
 - 添加自动加好友，自动拉群可配置项
 - 重启后可维持登录状态
-#   W e C h a t B o t  
- #   W e C h a t B o t  
- #   W e C h a t B o t 1  
+#   W e C h a t B o t 
+ 
+ #   W e C h a t B o t 
+ 
+ #   W e C h a t B o t 1 
+ 
  

@@ -7,6 +7,7 @@ const schedule = require('./schedule/index');
 const config = require('./config/index');
 const untils = require('./utils/index');
 const superagent = require('./superagent/index');
+const { tasks } = require('./config/index');
 
 // 延时函数，防止检测出类似机器人行为操作
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -65,90 +66,104 @@ async function onMessage(msg) {
       let contactContent = content.replace('今日天气', '').replace('天气', '');
       if (contactContent) {
         let res = await superagent.getTXweather(contactContent);
-        await delay(2000);
+        await delay(600);
         await contact.say(res);
       }
     } else if (content.substr(0, 4) == '全网热搜' || content.substr(0, 2) == '热搜') {
       let res = await superagent.getNetworkHot();
-      await delay(2000);
+      await delay(610);
       await contact.say(res);
     } else if (content.substr(0, 4) == '世界时间' || content.substr(0, 2) == '时间') {
       let contactContent = content.replace('世界时间', '').replace('时间', '');
       if (contactContent) {
         let res = await superagent.getWorldTime(contactContent);
-        await delay(2000);
+        await delay(620);
         await contact.say(res);
       }
     } else if (content.substr(0, 4) == 'IP查询' || content.substr(0, 2) == 'IP') {
       let contactContent = content.replace('IP查询', '').replace('IP', '');
       if (contactContent) {
         let res = await superagent.getIPQuery(contactContent);
-        await delay(2000);
+        await delay(500);
         await contact.say(res);
       }
     } else if (content.substr(0, 4) == '网页图片' || content.substr(0, 2) == '图片') {
       let contactContent = content.replace('网页图片', '').replace('图片', '');
       if (contactContent) {
         let res = await superagent.getHtmlPic(contactContent.toString());
-        await delay(2000);
+        await delay(510);
         await contact.say(res);
       }
     } else if (content.substr(0, 4) == '股票术语' || content.substr(0, 2) == '股票') {
       let contactContent = content.replace('股票术语', '').replace('股票', '');
       if (contactContent) {
         let res = await superagent.getSharesWord(contactContent.toString());
-        await delay(2000);
+        await delay(520);
         await contact.say(res);
       }
     } else if (content.substr(0, 4) == 'AI新闻' || content.substr(0, 2) == 'AI') {
       let contactContent = content.replace('AI新闻', '').replace('AI', '');
       if (contactContent) {
         let res = await superagent.getAI(contactContent.toString());
-        await delay(2000);
+        await delay(530);
         await contact.say(res);
       }
     } else if (content.substr(0, 4) == '获取摘要' || content.substr(0, 2) == '摘要') {
       let contactContent = content.replace('获取摘要', '').replace('获取摘要', '');
       if (contactContent) {
         let res = await superagent.getAutoAbstract(contactContent.toString());
-        await delay(2000);
+        await delay(410);
         await contact.say(res);
       }
     } else if (content.substr(0, 3) == '二维码' || content.substr(0, 2) == 'QR') {
       let contactContent = content.replace('二维码', '').replace('QR', '');
       if (contactContent) {
         let res = await superagent.getQRCode(contactContent.toString());
-        await delay(2000);
+        await delay(400);
         await contact.say(res);
       }
     } else if (content.substr(0, 4) == '汇率换算' || content.substr(0, 2) == '汇率') {
       let contactContent = content.replace('汇率换算', '').replace('汇率', '');
       if (contactContent) {
         let res = await superagent.getFXrate(contactContent.toString());
-        await delay(2000);
+        await delay(300);
         await contact.say(res);
       }
     } else if (content.substr(0, 4) == '励志名言' || content.substr(0, 2) == '励志') {
       let res = await superagent.getGuoDu();
-      await delay(2000);
+      await delay(100);
       await contact.say(res);
 
     } else if (content.substr(0, 4) == '古代情诗' || content.substr(0, 2) == '情诗') {
       let res = await superagent.getLovePoem();
-      await delay(2000);
+      await delay(200);
       await contact.say(res);
     } else if (content.substr(0, 4) == '财经新闻' || content.substr(0, 2) == '财经') {
       let contactContent = content.replace('财经新闻', '').replace('财经', '');
       if (contactContent) {
         let res = await superagent.getFinanceNews(contactContent.toString());
-        await delay(2000);
+        await delay(250);
         await contact.say(res);
       }
     } else if (content.substr(0, 4) == '国际新闻' || content.substr(0, 2) == '国际') {
       let contactContent = content.replace('国际新闻', '').replace('国际', '');
       if (contactContent) {
         let res = await superagent.getWorldNews(contactContent.toString());
-        await delay(2000);
+        await delay(270);
+        await contact.say(res);
+      }
+    } else if (content.substr(0, 4) == '分类诗词' || content.substr(0, 2) == '诗词') {
+      let contactContent = content.replace('分类诗词', '').replace('诗词', '');
+      if (contactContent) {
+        let res = await superagent.getMingYan(contactContent.toString());
+        await delay(290);
+        await contact.say(res);
+      }
+    } else if (content.substr(0, 4) == '藏头诗词' || content.substr(0, 2) == '藏头') {
+      let contactContent = content.replace('藏头诗词', '').replace('藏头', '');
+      if (contactContent) {
+        let res = await superagent.getCangTou(contactContent.toString());
+        await delay(300);
         await contact.say(res);
       }
     }
@@ -170,7 +185,7 @@ async function onMessage(msg) {
           console.log('天行对接的图灵机器人回复：', reply);
         }
         try {
-          await delay(2000);
+          await delay(700);
           await contact.say(reply);
         } catch (e) {
           console.error(e);
@@ -190,25 +205,63 @@ async function initDay() {
     let contact =
       (await bot.Contact.find({ name: config.NICKNAME })) ||
       (await bot.Contact.find({ alias: config.NAME })); // 获取你要发送的联系人
+    let contact2 =
+      (await bot.Contact.find({ name: "Becky2" })) ||
+      (await bot.Contact.find({ alias: "Becky2" })); // 获取你要发送的联系人
+
     let one = await superagent.getOne(); //获取每日一句
-    let weather = await superagent.getTXweather(); //获取天气信息
+    let lizhi = await superagent.getGuoDu();
+    let weather = await superagent.getTXweather("上海"); //获取天气信息
+    let yingyu = await superagent.getEveryDay();
+    let AI = await superagent.getAI("随便看看");
     let today = await untils.formatDate(new Date()); //获取今天的日期
     let memorialDay = untils.getDay(config.MEMORIAL_DAY); //获取纪念日天数
-    let sweetWord = await superagent.getSweetWord();
+    let fx = await superagent.getFXrate("AUDCNY");
+    let finance = await superagent.getFinanceNews("随便看看");
 
     // 你可以修改下面的 str 来自定义每日说的内容和格式
     // PS: 如果需要插入 emoji(表情), 可访问 "https://getemoji.com/" 复制插入
-    let str = `${today}\n我们在一起的第${memorialDay}天\n\n元气满满的一天开始啦,要开心噢^_^\n\n今日天气\n${weather.weatherTips}\n${weather.todayWeather}\n每日一句:\n${one}\n\n每日土味情话：\n${sweetWord}\n\n————————最爱你的我`;
+    let str = `${today}\n距离CFA考试还有${memorialDay}天\n\n${lizhi}\n${yingyu}\n${one}\n\n今日天气\n${weather}\n\n汇率为\n${fx}`;
+    let str2 = `今天人工智能的新闻有${AI}\n\n今天财经的新闻有\n${finance}`;
     try {
       logMsg = str;
-      await delay(2000);
+      await delay(1000);
       await contact.say(str); // 发送消息
+      await delay(1500);
+      await contact2.say(str); // 发送消息
+      logMsg = str2;
+      await delay(1000);
+      await contact.say(str2); // 发送消息
+      await delay(1500);
+      await contact2.say(str2); // 发送消息
     } catch (e) {
       logMsg = e.message;
     }
     console.log(logMsg);
   });
+  for (const task in config.tasks) {
+    schedule.setSchedule(config.tasks[task].date, async () => {
+      console.log('你的贴心小助理开始工作啦！');
+      let logMsg;
+      let contact =
+        (await bot.Contact.find({ name: config.tasks[task].nick })) ||
+        (await bot.Contact.find({ alias: config.tasks[task].nick })); // 获取你要发送的联系人
+      // 你可以修改下面的 str 来自定义每日说的内容和格式
+      // PS: 如果需要插入 emoji(表情), 可访问 "https://getemoji.com/" 复制插入
+      let str = config.tasks[task].emoji + config.tasks[task].action;
+      try {
+        logMsg = str;
+        await delay(1000);
+        await contact.say(str); // 发送消息
+      } catch (e) {
+        logMsg = e.message;
+      }
+      console.log(logMsg);
+    });
+  }
 }
+
+
 
 const bot = WechatyBuilder.build({
   name: 'WechatEveryDay',

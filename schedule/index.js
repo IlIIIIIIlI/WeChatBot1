@@ -38,5 +38,5 @@ function setSchedule(date, callback) {
 }
 
 module.exports = {
-    setSchedule
+    setSchedule,
 }

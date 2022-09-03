@@ -2,7 +2,7 @@ function getDay(date) {
   var date2 = new Date();
   var date1 = new Date(date);
   var iDays = parseInt(
-    Math.abs(date2.getTime() - date1.getTime()) / 1000 / 60 / 60 / 24
+    Math.abs(date1.getTime() - date2.getTime()) / 1000 / 60 / 60 / 24
   );
   return iDays;
 }
