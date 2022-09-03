@@ -58,14 +58,101 @@ async function onMessage(msg) {
   } else if (isText) {
     // 如果非群消息 目前只处理文字消息
     console.log(`发消息人: ${alias} 消息内容: ${content}`);
-    if (content.substr(0, 1) == '?' || content.substr(0, 1) == '？') {
-      let contactContent = content.replace('?', '').replace('？', '');
+
+
+    // 根据发送文字的前四个字进行判断
+    if (content.substr(0, 4) == '今日天气' || content.substr(0, 2) == '天气') {
+      let contactContent = content.replace('今日天气', '').replace('天气', '');
       if (contactContent) {
-        let res = await superagent.getRubbishType(contactContent);
+        let res = await superagent.getTXweather(contactContent);
         await delay(2000);
         await contact.say(res);
       }
-    } else if (config.AUTOREPLY && config.AUTOREPLYPERSON.indexOf(alias) > -1) {
+    } else if (content.substr(0, 4) == '全网热搜' || content.substr(0, 2) == '热搜') {
+      let res = await superagent.getNetworkHot();
+      await delay(2000);
+      await contact.say(res);
+    } else if (content.substr(0, 4) == '世界时间' || content.substr(0, 2) == '时间') {
+      let contactContent = content.replace('世界时间', '').replace('时间', '');
+      if (contactContent) {
+        let res = await superagent.getWorldTime(contactContent);
+        await delay(2000);
+        await contact.say(res);
+      }
+    } else if (content.substr(0, 4) == 'IP查询' || content.substr(0, 2) == 'IP') {
+      let contactContent = content.replace('IP查询', '').replace('IP', '');
+      if (contactContent) {
+        let res = await superagent.getIPQuery(contactContent);
+        await delay(2000);
+        await contact.say(res);
+      }
+    } else if (content.substr(0, 4) == '网页图片' || content.substr(0, 2) == '图片') {
+      let contactContent = content.replace('网页图片', '').replace('图片', '');
+      if (contactContent) {
+        let res = await superagent.getHtmlPic(contactContent.toString());
+        await delay(2000);
+        await contact.say(res);
+      }
+    } else if (content.substr(0, 4) == '股票术语' || content.substr(0, 2) == '股票') {
+      let contactContent = content.replace('股票术语', '').replace('股票', '');
+      if (contactContent) {
+        let res = await superagent.getSharesWord(contactContent.toString());
+        await delay(2000);
+        await contact.say(res);
+      }
+    } else if (content.substr(0, 4) == 'AI新闻' || content.substr(0, 2) == 'AI') {
+      let contactContent = content.replace('AI新闻', '').replace('AI', '');
+      if (contactContent) {
+        let res = await superagent.getAI(contactContent.toString());
+        await delay(2000);
+        await contact.say(res);
+      }
+    } else if (content.substr(0, 4) == '获取摘要' || content.substr(0, 2) == '摘要') {
+      let contactContent = content.replace('获取摘要', '').replace('获取摘要', '');
+      if (contactContent) {
+        let res = await superagent.getAutoAbstract(contactContent.toString());
+        await delay(2000);
+        await contact.say(res);
+      }
+    } else if (content.substr(0, 3) == '二维码' || content.substr(0, 2) == 'QR') {
+      let contactContent = content.replace('二维码', '').replace('QR', '');
+      if (contactContent) {
+        let res = await superagent.getQRCode(contactContent.toString());
+        await delay(2000);
+        await contact.say(res);
+      }
+    } else if (content.substr(0, 4) == '汇率换算' || content.substr(0, 2) == '汇率') {
+      let contactContent = content.replace('汇率换算', '').replace('汇率', '');
+      if (contactContent) {
+        let res = await superagent.getFXrate(contactContent.toString());
+        await delay(2000);
+        await contact.say(res);
+      }
+    } else if (content.substr(0, 4) == '励志名言' || content.substr(0, 2) == '励志') {
+      let res = await superagent.getGuoDu();
+      await delay(2000);
+      await contact.say(res);
+
+    } else if (content.substr(0, 4) == '古代情诗' || content.substr(0, 2) == '情诗') {
+      let res = await superagent.getLovePoem();
+      await delay(2000);
+      await contact.say(res);
+    } else if (content.substr(0, 4) == '财经新闻' || content.substr(0, 2) == '财经') {
+      let contactContent = content.replace('财经新闻', '').replace('财经', '');
+      if (contactContent) {
+        let res = await superagent.getFinanceNews(contactContent.toString());
+        await delay(2000);
+        await contact.say(res);
+      }
+    } else if (content.substr(0, 4) == '国际新闻' || content.substr(0, 2) == '国际') {
+      let contactContent = content.replace('国际新闻', '').replace('国际', '');
+      if (contactContent) {
+        let res = await superagent.getWorldNews(contactContent.toString());
+        await delay(2000);
+        await contact.say(res);
+      }
+    }
+    else if (config.AUTOREPLY && config.AUTOREPLYPERSON.indexOf(alias) > -1) {
       // 如果开启自动聊天且已经指定了智能聊天的对象才开启机器人聊天\
       if (content) {
         let reply;

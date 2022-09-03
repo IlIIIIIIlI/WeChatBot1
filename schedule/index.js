@@ -33,7 +33,8 @@ const schedule = require('node-schedule')
 // 每6小时触发一次: '0 0 */6 * * *'
 
 function setSchedule(date, callback) {
-    schedule.scheduleJob({tz: 'Asia/Shanghai', rule: date}, callback)
+    schedule.scheduleJob({ tz: 'Australia/Sydney', rule: date }, callback)
+    // schedule.scheduleJob({ tz: 'Asia/Shanghai', rule: date }, callback)
 }
 
 module.exports = {
